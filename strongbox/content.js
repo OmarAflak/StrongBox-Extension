@@ -63,6 +63,12 @@ function zoomInOut(element) {
     })
 }
 
+function setValueAndAnimate(selector, value) {
+    const element = document.querySelector(selector)
+    element.value = value
+    zoomInOut(element)
+}
+
 window.onload = () => {
     document.addEventListener("keypress", event => {
         if (event.key === "p" && event.ctrlKey) {
@@ -78,12 +84,8 @@ window.onload = () => {
                 const password = window.prompt("password", "")
                 getAccountForUrl(profile, password, window.location.href)
                 .then(account => {
-                    const usernameField = document.querySelector(account.username.selector)
-                    const passwordField = document.querySelector(account.password.selector)
-                    usernameField.value = account.username.value
-                    passwordField.value = account.password.value
-                    zoomInOut(usernameField)
-                    zoomInOut(passwordField)
+                    setValueAndAnimate(account.username.selector, account.username.value)
+                    setValueAndAnimate(account.password.selector, account.password.value)
                 })
                 .catch(console.error)
             })
