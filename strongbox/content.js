@@ -14,6 +14,13 @@ function setProfile(profile) {
     })
 }
 
+function handleAPIResponse(response) {
+    if (response.success) {
+        return Promise.resolve(response.data)
+    }
+    return Promise.reject(response.message)
+}
+
 function getAccountForUrl(profile, password, url) {
     return fetch("http://localhost:8000/account", {
         method: "post",
@@ -27,6 +34,7 @@ function getAccountForUrl(profile, password, url) {
         })
     })
     .then(response => response.json())
+    .then(handleAPIResponse)
 }
 
 function createAccount(url, usernameSelector, passwordSelector, usernameValue, passwordValue) {
@@ -49,6 +57,8 @@ function createAccount(url, usernameSelector, passwordSelector, usernameValue, p
             }
         })
     })
+    .then(response => response.json())
+    .then(handleAPIResponse)
 }
 
 function zoomInOut(element) {
@@ -84,8 +94,12 @@ window.onload = () => {
                 const password = sha256(window.prompt("password", ""))
                 getAccountForUrl(profile, password, window.location.href)
                 .then(account => {
-                    setValueAndAnimate(account.username.selector, account.username.value)
-                    setValueAndAnimate(account.password.selector, account.password.value)
+                    if (account == null || typeof account === "undefined") {
+                        console.error("Wrong password")
+                    } else {
+                        setValueAndAnimate(account.username.selector, account.username.value)
+                        setValueAndAnimate(account.password.selector, account.password.value)
+                    }
                 })
                 .catch(console.error)
             })
