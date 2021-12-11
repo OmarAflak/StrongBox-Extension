@@ -1,0 +1,17 @@
+{
+    "name": "StrongBox",
+    "short_name": "StrongBox",
+    "version": "1.0",
+    "description": "Fill in your passwords automatically.",
+    "manifest_version": 3,
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+    }],
+    "host_permissions": [
+        "http://localhost:8000/*"
+    ],
+    "permissions": [
+        "storage"
+    ]
+}
