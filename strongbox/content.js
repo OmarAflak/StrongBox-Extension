@@ -94,12 +94,8 @@ window.onload = () => {
                 const password = sha256(window.prompt("password", ""))
                 getAccountForUrl(profile, password, window.location.href)
                 .then(account => {
-                    if (account == null || typeof account === "undefined") {
-                        console.error("Wrong password")
-                    } else {
-                        setValueAndAnimate(account.username.selector, account.username.value)
-                        setValueAndAnimate(account.password.selector, account.password.value)
-                    }
+                    setValueAndAnimate(account.username.selector, account.username.value)
+                    setValueAndAnimate(account.password.selector, account.password.value)
                 })
                 .catch(console.error)
             })
