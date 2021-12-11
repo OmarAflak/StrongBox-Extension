@@ -81,7 +81,8 @@ window.onload = () => {
                 return profile
             })
             .then(profile => {
-                const password = window.prompt("password", "")
+                const password = sha256(window.prompt("password", ""))
+                console.log(password)
                 getAccountForUrl(profile, password, window.location.href)
                 .then(account => {
                     setValueAndAnimate(account.username.selector, account.username.value)
