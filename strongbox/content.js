@@ -9,7 +9,7 @@ function getProfile() {
 function setProfile(profile) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set({profile}, () => {
-            resolve()
+            resolve(profile)
         })
     })
 }
