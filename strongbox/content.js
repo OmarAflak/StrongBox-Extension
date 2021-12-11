@@ -51,6 +51,18 @@ function createAccount(url, usernameSelector, passwordSelector, usernameValue, p
     })
 }
 
+function zoomInOut(element) {
+    element.animate([
+        {transform: "scale(1, 1)"},
+        {transform: "scale(1.3, 1.3)"},
+        {transform: "scale(1, 1)"}
+    ], {
+        duration: 300,
+        iterations: 1,
+        "animation-timing-function": "cubic-bezier(0.1, 0.7, 1.0, 0.1)"
+    })
+}
+
 window.onload = () => {
     document.addEventListener("keypress", event => {
         if (event.key === "p" && event.ctrlKey) {
@@ -66,8 +78,12 @@ window.onload = () => {
                 const password = window.prompt("password", "")
                 getAccountForUrl(profile, password, window.location.href)
                 .then(account => {
-                    document.querySelector(account.username.selector).value = account.username.value
-                    document.querySelector(account.password.selector).value = account.password.value
+                    const usernameField = document.querySelector(account.username.selector)
+                    const passwordField = document.querySelector(account.password.selector)
+                    usernameField.value = account.username.value
+                    passwordField.value = account.password.value
+                    zoomInOut(usernameField)
+                    zoomInOut(passwordField)
                 })
                 .catch(console.error)
             })
