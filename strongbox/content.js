@@ -18,7 +18,7 @@ function handleAPIResponse(response) {
     if (response.success) {
         return Promise.resolve(response.data)
     }
-    return Promise.reject(response.message)
+    return Promise.reject(response.error)
 }
 
 function getAccountForUrl(profile, password, url) {
